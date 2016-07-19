@@ -1,4 +1,7 @@
-Changes in version 1.0-6 (2016-03-2)
+Changes in version 1.0-6 (2016-07-19)
+  [new feature] The aggregation of the nodes and weights while the creation of a sparse
+  grid is no longer done at the very end but repeatetly. This change saves a lot of
+  memory - especially for high accuracy levels in high dimensions.
   [new feature] mvQuad do not longer depend on the "rgl"-package but suggests.
   This enables the use of mvQuad on systems without X11-environment (like HPC-Clusters)
 
