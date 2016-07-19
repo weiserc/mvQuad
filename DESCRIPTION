@@ -1,0 +1,26 @@
+Package: mvQuad
+Type: Package
+Title: Methods for Multivariate Quadrature
+Version: 1.0-6
+Date: 2016-03-1
+Author: Constantin Weiser (HHU of Duesseldorf / Germany)
+Maintainer: Constantin Weiser <weiserc@hhu.de>
+Description: Provides methods to construct multivariate grids, which can be used
+    for multivariate quadrature. This grids can be based on different quadrature
+    rules like Newton-Cotes formulas (trapezoidal-, Simpson's- rule, ...) or Gauss
+    quadrature (Gauss-Hermite, Gauss-Legendre, ...). For the construction of the
+    multidimensional grid the product-rule or the combination- technique can be
+    applied.
+License: GPL-3
+Depends:
+    R (>= 3.0)
+Imports:
+    data.table,
+    statmod,
+    methods
+Suggests:
+    knitr,
+    rgl,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 5.0.1

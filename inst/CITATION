@@ -1,0 +1,22 @@
+citHeader("To cite package mvQuad in publications use")
+
+## R >= 2.8.0 passes package metadata to citation().
+if(!exists("meta") || is.null(meta)) meta <- packageDescription("mvQuad")
+year <- sub("-.*", "", meta$Date)
+note <- sprintf("R package version %s", meta$Version)
+
+citEntry(entry = "Manual",
+         title = "{mvQuad}: Methods for Multivariate Quadrature.",
+         author = as.person("Constantin Weiser"), 
+         year = year,
+         note = note,
+         url = "http://CRAN.R-project.org/package=mvQuad",
+
+         textVersion =
+         paste("Constantin Weiser",
+   	       sprintf("(%s).", year),	 
+               "mvQuad: Methods for Multivariate Quadrature",
+	       paste(note, ".", sep = ""),
+               "URL http://CRAN.R-project.org/package=mvQuad")
+)
+

@@ -1,0 +1,16 @@
+exportPattern("^[[:alpha:]]+")
+
+import(data.table)
+
+importFrom("stats", "dnorm")
+importFrom("graphics", "axis", "plot")
+importFrom("methods", "existsFunction", "is")
+importFrom("stats", "na.omit")
+importFrom("utils", "object.size")
+importFrom("statmod", "gauss.quad")
+
+S3method(print, NIGrid)
+S3method(plot, NIGrid)
+S3method(rescale, NIGrid)
+S3method(size, NIGrid)
+S3method(dim, NIGrid)

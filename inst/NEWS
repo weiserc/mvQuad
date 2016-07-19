@@ -1,0 +1,22 @@
+Changes in version 1.0-6 (2016-03-2)
+  [new feature] mvQuad do not longer depend on the "rgl"-package but suggests.
+  This enables the use of mvQuad on systems without X11-environment (like HPC-Clusters)
+
+Changes in version 1.0-5 (2016-02-18)
+  [new feature] Nodes and weights for Gaussian quadrature (GLa, GLe, GHe) are now
+  computed by "gauss.quad" (package: statmod). This enables use of higher order rules
+
+Changes in version 1.0-4 (2015-11-11)
+
+  [bug fix] enable rescaling for 1D-grids
+
+
+Changes in version 1.0-3 (2015-11-03)
+
+  [bug fix] aggregation of weights in 'createNIGrid' corrected (thanks to Daniel B.)
+
+
+Changes in version 1.0-2 (2015-11-01)
+
+ [initial submission] editorial corrections
+
