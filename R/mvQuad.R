@@ -294,13 +294,20 @@ readRule <- function(file=NULL){
 }
 
 
+
 .sgridnD <- function(dim, type, level, level.trans){
   minq <- max(0,level-dim)
   maxq <- level-1
 
-  storage <- vector(mode="list", length= sum(choose(c(minq:maxq) + dim - 1, dim - 1)))
+  noSubGrids <- sum(choose(c(minq:maxq) + dim - 1, dim - 1))
+  maxStorSize <- 100 # fine tuning?
+  storage <- vector(mode="list", length = maxStorSize)
+
+  nw.table <- data.table()
+  nw.names <- c(paste("n", c(1:dim), sep="_"), "w.c")
 
   cnt <- 0
+  w.c <- NULL
   for (q in (minq:maxq)) {
     bq  <- (-1)^(maxq-q)*choose(dim-1,dim+q-level)
 
@@ -310,28 +317,40 @@ readRule <- function(file=NULL){
 
       cnt <- cnt + 1
       storage[[cnt]] <- data.table::data.table(res[[1]], bq*res[[2]])
+
+      if (cnt == maxStorSize) {
+        nw.table <- rbindlist(c(list(nw.table), storage))
+        data.table::setnames(nw.table, nw.names)
+        data.table::setkeyv(x = nw.table, cols = nw.names[-(dim+1)])
+        nw.table[, w:=sum(w.c), by = eval(nw.names[-(dim+1)])]
+        nw.table <- unique(nw.table, by = eval(nw.names[-(dim+1)]))
+        nw.table[,w.c:=NULL]
+
+        cnt <- 0
+      }
     }
   }
-  tmp <- data.table::rbindlist(storage)
-  tmp.names <- c(paste("n", c(1:dim), sep="_"), "w.c")
-  data.table::setnames(tmp, tmp.names)
-  data.table::setkeyv(x = tmp, cols = tmp.names[-(dim+1)])
 
-  w.c <- NULL
+  if (cnt > 0) {
+    nw.table <- rbindlist(c(list(nw.table), storage[1:cnt]))
+    data.table::setnames(nw.table, nw.names)
+    data.table::setkeyv(x = nw.table, cols = nw.names[-(dim+1)])
+    nw.table[, w:=sum(w.c), by = eval(nw.names[-(dim+1)])]
+    nw.table <- unique(nw.table, by = eval(nw.names[-(dim+1)]))
+    nw.table[,w.c:=NULL]
+  }
 
-  tmp[, w:=sum(w.c), by = eval(tmp.names[-(dim+1)])]
-  tmp <- unique(tmp, by = eval(tmp.names[-(dim+1)]))
+  nw.table <- nw.table[w!=0]
 
-  tmp <- tmp[w!=0]
-
-  n <- tmp[,tmp.names[-(dim+1)], with=FALSE]
-  w <- tmp[, w]
+  n <- nw.table[,nw.names[-(dim+1)], with=FALSE]
+  w <- nw.table[, w]
 
   row.names(n) <- NULL
   colnames(n) <- NULL
 
   return(list(n = as.matrix(n), w = as.matrix(w), features=res[[3]]))
 }
+
 
 #' creates a grid for numerical integration.
 #'
