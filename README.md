@@ -1,5 +1,6 @@
 # mvQuad: Methods for Multivariate Quadrature
 
+link to CRAN: https://cran.r-project.org/web/packages/mvQuad/
 
 This package provides a collection of methods for (potentially) multivariate
 quadrature in R. It's especially designed for use in _statistical problems_, 
